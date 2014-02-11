@@ -9,9 +9,8 @@ from pyramid.security import effective_principals
 sanitize_search_string_re = re.compile(r'[\\\+\-\&\|\!\(\)\{\}\[\]\^\~\:\/\\\*\?]')
 
 
-def get_filtered_query(term, fields, search_fields, principals):
+def get_filtered_query(term, fields, search_fields, highlighter_fields, principals):
     return {
-        'explain': True,
         'query': {
             'filtered': {
                 'query': {
@@ -37,9 +36,7 @@ def get_filtered_query(term, fields, search_fields, principals):
             }
         },
         'highlight': {
-            'fields': {
-                '_all': {}
-            }
+            'fields': highlighter_fields
         },
         'facets': {},
         'fields': fields
@@ -94,7 +91,6 @@ def search(context, request, search_type=None):
 
     if search_type is None:
         search_type = request.params.get('type', '*')
-    
         # handling invalid item types
         if search_type != '*':
             if search_type not in root.by_item_type:
@@ -108,6 +104,7 @@ def search(context, request, search_type=None):
 
     # Building query for filters
     search_fields = []
+    highlighter_fields = {}
     if search_type == '*':
         doc_types = ['antibody_approval', 'biosample', 'experiment', 'target', 'dataset']
     else:
@@ -132,13 +129,19 @@ def search(context, request, search_type=None):
             result['columns'].update(collection.columns)
         # Adding search fields and boost values
         for value in schema.get('boost_values', ()):
-            search_fields = search_fields + ['embedded.' + value, 'embedded.' + value + '.standard^2', 'embedded.' + value + '.untouched^3']
+            highlighter_fields['embedded.' + value] = {}
+            highlighter_fields['embedded.' + value + '.standard'] = {}
+            highlighter_fields['embedded.' + value + '.untouched'] = {}
+            search_fields = search_fields + \
+                ['embedded.' + value, 'embedded.' + value + '.standard^2',
+                    'embedded.' + value + '.untouched^3']
 
     if not result['columns']:
         del result['columns']
 
     # Builds filtered query which supports multiple facet selection
-    query = get_filtered_query(search_term, sorted(fields), search_fields, principals)
+    query = get_filtered_query(search_term, sorted(fields),
+                               search_fields, highlighter_fields, principals)
 
     # Sorting the files when search term is not specified
     if search_term == '*':
@@ -178,10 +181,9 @@ def search(context, request, search_type=None):
     else:
         facets = [{'Data Type': 'type'}]
         query['facets'] = {'type': {'terms': {'field': '_type', 'size': 99999}}}
-    
+
     # Execute the query
     results = es.search(query, index='encoded', doc_type=doc_types, size=size)
-
     # Loading facets in to the results
     if 'facets' in results:
         facet_results = results['facets']
