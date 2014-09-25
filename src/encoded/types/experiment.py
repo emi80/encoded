@@ -88,7 +88,7 @@ class Experiment(Dataset):
                 ),
                 '$condition': 'assay_term_id',
             },
-            'objective_slim': {
+            'objective_slims': {
                 '$value': (
                     lambda registry, assay_term_id:
                         registry['ontology'][assay_term_id]['objectives']
@@ -96,7 +96,7 @@ class Experiment(Dataset):
                 ),
                 '$condition': 'assay_term_id',
             },
-            'type_slim': {
+            'type_slims': {
                 '$value': (
                     lambda registry, assay_term_id:
                         registry['ontology'][assay_term_id]['types']

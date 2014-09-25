@@ -110,7 +110,7 @@
             "type": "array"
         },
         "type_slims": {
-            "title": "Typ",
+            "title": "Type",
             "type": "array"
         },
         "objective_slims": {
