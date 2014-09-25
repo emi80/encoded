@@ -105,6 +105,18 @@
             "title": "Organ",
             "type": "array"
         },
+        "category_slims": {
+            "title": "Category",
+            "type": "array"
+        },
+        "type_slims": {
+            "title": "Typ",
+            "type": "array"
+        },
+        "objective_slims": {
+            "title": "Objective",
+            "type": "array"
+        },
         "replicates.library.biosample.life_stage": {
             "title": "Life stage",
             "type": "string"
