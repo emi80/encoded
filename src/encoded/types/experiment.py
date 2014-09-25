@@ -80,6 +80,30 @@ class Experiment(Dataset):
                 ),
                 '$condition': 'assay_term_id',
             },
+            'category_slims': {
+                '$value': (
+                    lambda registry, assay_term_id:
+                        registry['ontology'][assay_term_id]['category']
+                        if assay_term_id in registry['ontology'] else []
+                ),
+                '$condition': 'assay_term_id',
+            },
+            'objective_slim': {
+                '$value': (
+                    lambda registry, assay_term_id:
+                        registry['ontology'][assay_term_id]['objectives']
+                        if assay_term_id in registry['ontology'] else []
+                ),
+                '$condition': 'assay_term_id',
+            },
+            'type_slim': {
+                '$value': (
+                    lambda registry, assay_term_id:
+                        registry['ontology'][assay_term_id]['types']
+                        if assay_term_id in registry['ontology'] else []
+                ),
+                '$condition': 'assay_term_id',
+            },
             'month_released': {
                 '$value': lambda date_released: datetime.datetime.strptime(
                     date_released, '%Y-%m-%d').strftime('%B, %Y'),

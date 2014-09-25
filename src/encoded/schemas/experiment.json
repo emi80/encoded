@@ -224,6 +224,18 @@
         "developmental_slims": {
             "title": "Developmental slims",
             "type": "string"
+        },
+        "category_slims": {
+            "title": "Category slims",
+            "type": "string"
+        },
+        "objective_slims": {
+            "title": "Objective slims",
+            "type": "string"
+        },
+        "type_slims": {
+            "title": "Type slims",
+            "type": "string"
         }, 
         "assay_synonyms": {
             "title": "Assay synonyms",
@@ -285,6 +297,9 @@
         "biosample_type": 1.0,
         "organ_slims": 1.0,
         "developmental_slims": 1.0,
+        "category_slims": 1.0,
+        "objective_slims": 1.0,
+        "type_slims": 1.0,
         "assay_synonyms": 1.0,
         "biosample_synonyms": 1.0,
         "files.accession": 1.0,
