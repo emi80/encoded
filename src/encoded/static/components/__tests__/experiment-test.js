@@ -184,7 +184,7 @@ describe('Experiment Page', function() {
             experiment = TestUtils.renderIntoDocument(
                 <Experiment context={context_rep} />
             );
-            replicates = TestUtils.scryRenderedDOMComponentsWithClass(experiment, 'panel-replicate');
+            replicates = experiment.getDOMNode().querySelectorAll('[data-test="panel-replicate"]');
         });
 
         it('has proper biosample summary ', function() {
@@ -201,13 +201,12 @@ describe('Experiment Page', function() {
             expect(replicates.length).toEqual(2);
         });
  
-
         it('has links to the proper biosamples in both replicate panels', function() {
-            var anchors = replicates[0].getDOMNode().getElementsByTagName('a');
+            var anchors = replicates[0].getElementsByTagName('a');
             expect(anchors.length).toEqual(1);
             expect(anchors[0].textContent).toEqual('ENCBS087RNA');
             expect(anchors[0].getAttribute('href')).toEqual('/biosamples/ENCBS087RNA/');
-            anchors = replicates[1].getDOMNode().getElementsByTagName('a');
+            anchors = replicates[1].getElementsByTagName('a');
             expect(anchors.length).toEqual(1);
             expect(anchors[0].textContent).toEqual('ENCBS989WPD');
             expect(anchors[0].getAttribute('href')).toEqual('/biosamples/ENCBS989WPD/');
@@ -217,15 +216,9 @@ describe('Experiment Page', function() {
             var assay, defTerms, defDescs;
 
             beforeEach(function() {
-                assay = TestUtils.scryRenderedDOMComponentsWithClass(experiment, 'panel-assay');
-                defTerms = assay[0].getDOMNode().getElementsByTagName('dt');
-                defDescs = assay[0].getDOMNode().getElementsByTagName('dd');
-            });
-
-            it('has one assay panel and seven key-value pairs', function() {
-                expect(assay.length).toEqual(1);
-                expect(defTerms.length).toEqual(7);
-                expect(defDescs.length).toEqual(7);
+                assay = experiment.getDOMNode().querySelector('[data-test="panel-assay"]');
+                defTerms = assay.getElementsByTagName('dt');
+                defDescs = assay.getElementsByTagName('dd');
             });
 
             it('has a proper link to a platform in the seventh key-value pair', function() {
