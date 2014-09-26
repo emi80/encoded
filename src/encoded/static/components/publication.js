@@ -32,30 +32,32 @@ var Panel = module.exports.Panel = React.createClass({
                 </div>
 
                 {context.abstract || context.data_used || context.references.length ?
-                    <div className="view-detail panel">
-                        {context.abstract ?
-                            <div className="abstract">
-                                <h2>Abstract</h2>
-                                <p>{context.abstract}</p>
-                            </div>
-                        : null}
+                    <div className="panel">
+                        <div className="panel-body view-detail">
+                            {context.abstract ?
+                                <div className="abstract">
+                                    <h2>Abstract</h2>
+                                    <p>{context.abstract}</p>
+                                </div>
+                            : null}
 
-                        <dl className="key-value-left">
-                            <div>
-                                {context.references && context.references.length ?
-                                    <div>
-                                        <dt>References</dt>
-                                        <dd><DbxrefList values={context.references} className="multi-value" /></dd>
-                                    </div>
-                                : null}
-                                {context.data_used ?
-                                    <div>
-                                        <dt>Consortium data referenced in this publication</dt>
-                                        <dd>{context.data_used}</dd>
-                                    </div>
-                                : null}
-                            </div>
-                        </dl>
+                            <dl className="key-value-left">
+                                <div>
+                                    {context.references && context.references.length ?
+                                        <div>
+                                            <dt>References</dt>
+                                            <dd><DbxrefList values={context.references} className="multi-value" /></dd>
+                                        </div>
+                                    : null}
+                                    {context.data_used ?
+                                        <div>
+                                            <dt>Consortium data referenced in this publication</dt>
+                                            <dd>{context.data_used}</dd>
+                                        </div>
+                                    : null}
+                                </div>
+                            </dl>
+                        </div>
                     </div>
                 : null}
             </div>

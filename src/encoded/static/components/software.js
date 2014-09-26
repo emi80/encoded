@@ -87,41 +87,43 @@ var Software = module.exports.Software = React.createClass({
                 </header>
 
                 <div className="panel data-display">
-                    <dl className="key-value">
-                        <div data-test="title">
-                            <dt>Title</dt>
-                            {context.source_url ?
-                                <dd><a href={context.source_url}>{context.title}</a></dd> :
-                                <dd>{context.title}</dd>
-                            }
-                        </div>
-
-                        <div data-test="description">
-                            <dt>Description</dt>
-                            <dd>{context.description}</dd>
-                        </div>
-
-                        {context.software_type && context.software_type.length ?
-                            <div data-test="type">
-                                <dt>Software type</dt>
-                                <dd>{context.software_type.join(", ")}</dd>
+                    <div className="panel-body">
+                        <dl className="key-value">
+                            <div data-test="title">
+                                <dt>Title</dt>
+                                {context.source_url ?
+                                    <dd><a href={context.source_url}>{context.title}</a></dd> :
+                                    <dd>{context.title}</dd>
+                                }
                             </div>
-                        : null}
 
-                        {context.purpose && context.purpose.length ?
-                            <div data-test="purpose">
-                                <dt>Used for</dt>
-                                <dd>{context.purpose.join(", ")}</dd>
+                            <div data-test="description">
+                                <dt>Description</dt>
+                                <dd>{context.description}</dd>
                             </div>
-                        : null}
 
-                        {context.references && context.references.length ?
-                            <div data-test="references">
-                                <dt>References</dt>
-                                <dd><References pubs={context.references} /></dd>
-                            </div>
-                        : null}
-                    </dl>
+                            {context.software_type && context.software_type.length ?
+                                <div data-test="type">
+                                    <dt>Software type</dt>
+                                    <dd>{context.software_type.join(", ")}</dd>
+                                </div>
+                            : null}
+
+                            {context.purpose && context.purpose.length ?
+                                <div data-test="purpose">
+                                    <dt>Used for</dt>
+                                    <dd>{context.purpose.join(", ")}</dd>
+                                </div>
+                            : null}
+
+                            {context.references && context.references.length ?
+                                <div data-test="references">
+                                    <dt>References</dt>
+                                    <dd><References pubs={context.references} /></dd>
+                                </div>
+                            : null}
+                        </dl>
+                    </div>
                 </div>
             </div>
         );

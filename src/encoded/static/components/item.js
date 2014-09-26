@@ -48,10 +48,8 @@ var globals = require('./globals');
                             {altacc ? <h4 className="repl-acc">Replaces {altacc}</h4> : null}
                         </div>
                     </header>
-                    <div className="row">
-                        {context.description ? <p className="description">{context.description}</p> : null}
-                        {panel}
-                    </div>
+                    {context.description ? <p className="description">{context.description}</p> : null}
+                    {panel}
                 </div>
             );
         }

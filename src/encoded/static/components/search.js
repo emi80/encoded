@@ -759,7 +759,9 @@ var cx = React.addons.classSet;
                 <div>
                     {facetdisplay ?
                         <div className="panel data-display main-panel"> 
-                            {this.transferPropsTo(<ResultTable key={undefined} searchBase={searchBase} onChange={this.props.navigate} />)}
+                            <div className="panel-body">
+                                {this.transferPropsTo(<ResultTable key={undefined} searchBase={searchBase} onChange={this.props.navigate} />)}
+                            </div>
                         </div>
                     : <h4>{notification}</h4>}
                 </div>

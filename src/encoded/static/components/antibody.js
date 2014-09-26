@@ -82,96 +82,98 @@ var Lot = module.exports.Lot = React.createClass({
                 }
 
                 <div className="panel data-display">
-                    <dl className="key-value">
-                        <div data-test="source">
-                            <dt>Source (vendor)</dt>
-                            <dd><a href={context.source.url}>{context.source.title}</a></dd>
-                        </div>
-
-                        <div data-test="productid">
-                            <dt>Product ID</dt>
-                            <dd><a href={context.url}>{context.product_id}</a></dd>
-                        </div>
-
-                        <div data-test="lotid">
-                            <dt>Lot ID</dt>
-                            <dd>{context.lot_id}</dd>
-                        </div>
-
-                        {Object.keys(targets).length ?
-                            <div data-test="targets">
-                                <dt>Targets</dt>
-                                <dd>
-                                    {targetKeys.map(function(target, i) {
-                                        var targetObj = targets[target];
-                                        return <span key={i}>{i !== 0 ? ', ' : ''}<a href={target}>{targetObj.label}{' ('}<em>{targetObj.organism.scientific_name}</em>{')'}</a></span>;
-                                    })}
-                                </dd>
+                    <div className="panel-body">
+                        <dl className="key-value">
+                            <div data-test="source">
+                                <dt>Source (vendor)</dt>
+                                <dd><a href={context.source.url}>{context.source.title}</a></dd>
                             </div>
-                        : null}
 
-                        {context.lot_id_alias && context.lot_id_alias.length ?
-                            <div data-test="lotidalias">
-                                <dt>Lot ID aliases</dt>
-                                <dd>{context.lot_id_alias.join(', ')}</dd>
+                            <div data-test="productid">
+                                <dt>Product ID</dt>
+                                <dd><a href={context.url}>{context.product_id}</a></dd>
                             </div>
-                        : null}
 
-                        <div data-test="host">
-                            <dt>Host</dt>
-                            <dd className="sentence-case">{context.host_organism.name}</dd>
-                        </div>
-
-                        {context.clonality ?
-                            <div data-test="clonality">
-                                <dt>Clonality</dt>
-                                <dd className="sentence-case">{context.clonality}</dd>
+                            <div data-test="lotid">
+                                <dt>Lot ID</dt>
+                                <dd>{context.lot_id}</dd>
                             </div>
-                        : null}
 
-                        {context.purifications && context.purifications.length ?
-                            <div data-test="purifications">
-                                <dt>Purification</dt>
-                                <dd className="sentence-case">{context.purifications.join(', ')}</dd>
-                            </div>
-                        : null}
+                            {Object.keys(targets).length ?
+                                <div data-test="targets">
+                                    <dt>Targets</dt>
+                                    <dd>
+                                        {targetKeys.map(function(target, i) {
+                                            var targetObj = targets[target];
+                                            return <span key={i}>{i !== 0 ? ', ' : ''}<a href={target}>{targetObj.label}{' ('}<em>{targetObj.organism.scientific_name}</em>{')'}</a></span>;
+                                        })}
+                                    </dd>
+                                </div>
+                            : null}
 
-                        {context.isotype ?
-                            <div data-test="isotype">
-                                <dt>Isotype</dt>
-                                <dd className="sentence-case">{context.isotype}</dd>
-                            </div>
-                        : null}
+                            {context.lot_id_alias && context.lot_id_alias.length ?
+                                <div data-test="lotidalias">
+                                    <dt>Lot ID aliases</dt>
+                                    <dd>{context.lot_id_alias.join(', ')}</dd>
+                                </div>
+                            : null}
 
-                        {context.antigen_description ?
-                            <div data-test="antigendescription">
-                                <dt>Antigen description</dt>
-                                <dd>{context.antigen_description}</dd>
+                            <div data-test="host">
+                                <dt>Host</dt>
+                                <dd className="sentence-case">{context.host_organism.name}</dd>
                             </div>
-                        : null}
 
-                        {context.antigen_sequence ?
-                            <div data-test="antigensequence">
-                                <dt>Antigen sequence</dt>
-                                <dd>{context.antigen_sequence}</dd>
-                            </div>
-                        : null}
+                            {context.clonality ?
+                                <div data-test="clonality">
+                                    <dt>Clonality</dt>
+                                    <dd className="sentence-case">{context.clonality}</dd>
+                                </div>
+                            : null}
 
-                        {context.aliases && context.aliases.length ?
-                            <div data-test="aliases">
-                                <dt>Aliases</dt>
-                                <dd>{context.aliases.join(", ")}</dd>
-                            </div>
-                        : null}
-                        
-                        {context.dbxrefs && context.dbxrefs.length ?
-                            <div data-test="dbxrefs">
-                                <dt>External resources</dt>
-                                <dd><DbxrefList values={context.dbxrefs} /></dd>
-                            </div>
-                        : null}
+                            {context.purifications && context.purifications.length ?
+                                <div data-test="purifications">
+                                    <dt>Purification</dt>
+                                    <dd className="sentence-case">{context.purifications.join(', ')}</dd>
+                                </div>
+                            : null}
 
-                    </dl>
+                            {context.isotype ?
+                                <div data-test="isotype">
+                                    <dt>Isotype</dt>
+                                    <dd className="sentence-case">{context.isotype}</dd>
+                                </div>
+                            : null}
+
+                            {context.antigen_description ?
+                                <div data-test="antigendescription">
+                                    <dt>Antigen description</dt>
+                                    <dd>{context.antigen_description}</dd>
+                                </div>
+                            : null}
+
+                            {context.antigen_sequence ?
+                                <div data-test="antigensequence">
+                                    <dt>Antigen sequence</dt>
+                                    <dd>{context.antigen_sequence}</dd>
+                                </div>
+                            : null}
+
+                            {context.aliases && context.aliases.length ?
+                                <div data-test="aliases">
+                                    <dt>Aliases</dt>
+                                    <dd>{context.aliases.join(", ")}</dd>
+                                </div>
+                            : null}
+                            
+                            {context.dbxrefs && context.dbxrefs.length ?
+                                <div data-test="dbxrefs">
+                                    <dt>External resources</dt>
+                                    <dd><DbxrefList values={context.dbxrefs} /></dd>
+                                </div>
+                            : null}
+
+                        </dl>
+                    </div>
                 </div>
 
                 <div className="characterizations row multi-columns-row">
@@ -195,12 +197,11 @@ var ExperimentsUsingAntibody = React.createClass({
 
         return (
             <div>
-                <span className="pull-right">
-                    <a className="btn btn-info btn-sm" href={this.props.url}>View all</a>
-                </span>
-
-                <div>
-                    <h3>Experiments using antibody {context.accession}</h3>
+                <div className="panel">
+                    <div className="panel-heading">
+                        <a className="btn btn-info btn-xs pull-right btn-search" href={this.props.url}>View all</a>
+                        <h3>Experiments using antibody {context.accession}</h3>
+                    </div>
                     {this.transferPropsTo(
                         <ExperimentTable limit={5} total={this.props.total} />
                     )}
@@ -399,35 +400,37 @@ var AntibodyStatus = module.exports.AntibodyStatus = React.createClass({
         });
 
         return (
-            <section className="type-antibody-status view-detail panel">
-                <div className="row">
-                    <div className="col-xs-12">
-                        {Object.keys(statusTree).map(function(status) {
-                            var organisms = statusTree[status];
-                            return (
-                                <div key={status} className="row status-status-row">
-                                    {Object.keys(organisms).map(function(organism, i) {
-                                        var terms = Object.keys(organisms[organism]);
-                                        return (
-                                            <div key={i} className="row status-organism-row">
-                                                <div className="col-sm-3 col-sm-push-9 status-status sentence-case">
-                                                    {i === 0 ? <span><i className={globals.statusClass(status, 'indicator icon icon-circle')}></i>{status}</span> : ''}
+            <div className="panel">
+                <section className="type-antibody-status view-detail panel-body">
+                    <div className="row">
+                        <div className="col-xs-12">
+                            {Object.keys(statusTree).map(function(status) {
+                                var organisms = statusTree[status];
+                                return (
+                                    <div key={status} className="row status-status-row">
+                                        {Object.keys(organisms).map(function(organism, i) {
+                                            var terms = Object.keys(organisms[organism]);
+                                            return (
+                                                <div key={i} className="row status-organism-row">
+                                                    <div className="col-sm-3 col-sm-push-9 status-status sentence-case">
+                                                        {i === 0 ? <span><i className={globals.statusClass(status, 'indicator icon icon-circle')}></i>{status}</span> : ''}
+                                                    </div>
+                                                    <div className="col-sm-2 col-sm-pull-3 status-organism">
+                                                        {organism}
+                                                    </div>
+                                                    <div className="col-sm-7 col-sm-pull-3 status-terms">
+                                                        {terms.length === 1 && terms[0] === 'not specified' ? '' : terms.join(', ')}
+                                                    </div>
                                                 </div>
-                                                <div className="col-sm-2 col-sm-pull-3 status-organism">
-                                                    {organism}
-                                                </div>
-                                                <div className="col-sm-7 col-sm-pull-3 status-terms">
-                                                    {terms.length === 1 && terms[0] === 'not specified' ? '' : terms.join(', ')}
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            );
-                        })}
+                                            );
+                                        })}
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         );
     }
 });
