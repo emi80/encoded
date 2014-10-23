@@ -173,7 +173,8 @@ var App = React.createClass({
                                 <NavBar href={this.props.href} portal={this.state.portal}
                                         context_actions={context_actions}
                                         user_actions={this.state.user_actions} session={this.state.session}
-                                        loadingComplete={this.state.loadingComplete} />
+                                        loadingComplete={this.state.loadingComplete}
+                                        navigate={this.navigate} />
                                 <div id="content" className="container" key={key}>
                                     {content}
                                 </div>

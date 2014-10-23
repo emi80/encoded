@@ -23,6 +23,7 @@ var NavBar = React.createClass({
             context_actions: this.props.context_actions,
             user_actions: this.props.user_actions,
             href: this.props.href,
+            navigate: this.props.navigate
         });
     }
 });
@@ -62,7 +63,7 @@ var NavBarLayout = React.createClass({
             <div id="navbar" className="navbar navbar-fixed-top navbar-inverse">
                 <div className="container">
                     <Navbar brand={<a href="/">{portal.portal_title}</a>} toggleNavKey={1} bsClass="nav" bsStyle="link">
-                        <GlobalSections key={1} global_sections={portal.global_sections} section={section} />
+                        <GlobalSections key={1} global_sections={portal.global_sections} section={section} navigate={this.props.navigate} />
                     </Navbar>
                 </div>
                 {this.state.testWarning ?
@@ -85,7 +86,9 @@ var GlobalSections = React.createClass({
     // So that react-bootstrap closes the menu after you choose an item,
     // we need to supply it with this function which goes to the item's link.
     handleSelect: function(dest) {
-        return function() { window.location.href = dest; };
+        return function() {
+            this.props.navigate(dest);
+        }.bind(this);
     },
 
     render: function() {
