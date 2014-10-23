@@ -75,60 +75,7 @@ var App = React.createClass({
             errors: [],
             portal: portal,
             user_actions: user_actions,
-            dropdownComponent: undefined
         };
-    },
-
-    // Dropdown context using React context mechanism.
-    childContextTypes: {
-        dropdownComponent: React.PropTypes.string,
-        onDropdownChange: React.PropTypes.func
-    },
-
-    // Retrieve current React context
-    getChildContext: function() {
-        return {
-            dropdownComponent: this.state.dropdownComponent, // ID of component with visible dropdown
-            onDropdownChange: this.handleDropdownChange // Function to process dropdown state change
-        };
-    },
-
-    // When current dropdown changes; componentID is _rootNodeID of newly dropped-down component
-    handleDropdownChange: function(componentID) {
-        // Use React _rootNodeID to uniquely identify a dropdown menu;
-        // It's passed in as componentID
-        this.setState({dropdownComponent: componentID});
-    },
-
-    // Handle a click outside a dropdown menu by clearing currently dropped down menu
-    handleLayoutClick: function(e) {
-        if (this.state.dropdownComponent !== undefined) {
-            this.setState({dropdownComponent: undefined});
-        }
-    },
-
-    // Different browsers handle event listeners differently; this function covers all
-    bindEvent: function (el, eventName, eventHandler) {
-        if (el.addEventListener) {
-            // Modern browsers
-            el.addEventListener(eventName, eventHandler, false); 
-        } else if (el.attachEvent) {
-            // IE8 specific
-            el.attachEvent('on' + eventName, eventHandler);
-        }
-    },
-
-    // If ESC pressed while drop-down menu open, close the menu
-    handleKey: function(e) {
-        if (e.which === 27 && this.state.dropdownComponent !== undefined) {
-            e.preventDefault();
-            this.handleDropdownChange(undefined);
-        }
-    },
-
-    // Once the app component is mounted, bind keydowns to handleKey function
-    componentDidMount: function() {
-        this.bindEvent(window, 'keydown', this.handleKey);
     },
 
     render: function() {
