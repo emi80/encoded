@@ -5,9 +5,11 @@ var url = require('url');
 var mixins = require('./mixins');
 var productionHost = require('./globals').productionHost;
 var _ = require('underscore');
-var Navbar = require('../react-bootstrap/Navbar');
-var Nav = require('../react-bootstrap/Nav');
-var NavItem = require('../react-bootstrap/NavItem');
+var Navbar = require('react-bootstrap/Navbar');
+var Nav = require('react-bootstrap/Nav');
+var NavItem = require('react-bootstrap/NavItem');
+var DropdownButton = require('react-bootstrap/DropdownButton');
+var MenuItem = require('react-bootstrap/MenuItem');
 
 // Hide data from NavBarLayout
 var NavBar = React.createClass({
@@ -59,11 +61,8 @@ var NavBarLayout = React.createClass({
         return (
             <div id="navbar" className="navbar navbar-fixed-top navbar-inverse">
                 <div className="container">
-                    <Navbar brand={portal.portal_title} brandlink="/" noClasses={true} data-target="main-nav">
-                        <GlobalSections global_sections={portal.global_sections} section={section} />
-                        {this.transferPropsTo(<UserActions />)}
-                        {context_actions ? this.transferPropsTo(<ContextActions />) : null}
-                        {this.transferPropsTo(<Search />)}
+                    <Navbar brand={<a href="/">{portal.portal_title}</a>} toggleNavKey={1} bsClass="nav" bsStyle="link">
+                        <GlobalSections key={1} global_sections={portal.global_sections} section={section} />
                     </Navbar>
                 </div>
                 {this.state.testWarning ?
@@ -83,6 +82,12 @@ var NavBarLayout = React.createClass({
 
 
 var GlobalSections = React.createClass({
+    // So that react-bootstrap closes the menu after you choose an item,
+    // we need to supply it with this function which goes to the item's link.
+    handleSelect: function(dest) {
+        return function() { window.location.href = dest; };
+    },
+
     render: function() {
         var section = this.props.section;
 
@@ -93,24 +98,27 @@ var GlobalSections = React.createClass({
                 // Has dropdown menu; render it into subactions var
                 subactions = action.children.map(function (action) {
                     return (
-                        <NavItem href={action.url || ''} key={action.id}>
+                        <MenuItem href={action.url || ''} key={action.id} onSelect={this.handleSelect(action.url)}>
                             {action.title}
-                        </NavItem>
+                        </MenuItem>
                     );
-                });
+                }.bind(this));
             }
-            return (
-                <NavItem dropdown={action.hasOwnProperty('children')} key={action.id} href={action.url || ''}>
-                    {action.title}
-                    {action.children ?
-                        <Nav navbar={true} dropdown={true}>
-                            {subactions}
-                        </Nav>
-                    : null}
-                </NavItem>
-            );
-        });
-        return <Nav navbar={true} bsStyle="navbar-nav" activeKey={1}>{actions}</Nav>;
+            if (action.children) {
+                return (
+                    <DropdownButton navItem={true} key={action.id} title={action.title}>
+                        {subactions}
+                    </DropdownButton>
+                );
+            } else {
+                return (
+                    <NavItem key={action.id} href={action.url || ''}>
+                        {action.title}
+                    </NavItem>
+                );
+            }
+        }.bind(this));
+        return <Nav key={this.props.key} collapsable={this.props.collapsable} expanded={this.props.expanded} navbar={true}>{actions}</Nav>;
     }
 });
 
