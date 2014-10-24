@@ -63,7 +63,11 @@ var NavBarLayout = React.createClass({
             <div id="navbar" className="navbar navbar-fixed-top navbar-inverse">
                 <div className="container">
                     <Navbar brand={<a href="/">{portal.portal_title}</a>} toggleNavKey={1} bsClass="nav" bsStyle="link">
-                        <GlobalSections key={1} global_sections={portal.global_sections} section={section} navigate={this.props.navigate} />
+                        <div key={1}>
+                            <GlobalSections collapsable={this.props.collapsable} expanded={this.props.expanded} global_sections={portal.global_sections} section={section} navigate={this.props.navigate} />
+                            {this.transferPropsTo(<UserActions />)}
+                            {this.transferPropsTo(<Search />)}
+                        </div>
                     </Navbar>
                 </div>
                 {this.state.testWarning ?
@@ -109,7 +113,7 @@ var GlobalSections = React.createClass({
             }
             if (action.children) {
                 return (
-                    <DropdownButton navItem={true} key={action.id} title={action.title}>
+                    <DropdownButton navItem key={action.id} title={action.title}>
                         {subactions}
                     </DropdownButton>
                 );
@@ -121,7 +125,7 @@ var GlobalSections = React.createClass({
                 );
             }
         }.bind(this));
-        return <Nav key={this.props.key} collapsable={this.props.collapsable} expanded={this.props.expanded} navbar={true}>{actions}</Nav>;
+        return <Nav navbar>{actions}</Nav>;
     }
 });
 
@@ -129,19 +133,19 @@ var ContextActions = React.createClass({
     render: function() {
         var actions = this.props.context_actions.map(function(action) {
             return (
-                <NavItem href={action.href} key={action.name}>
+                <MenuItem href={action.href} key={action.name}>
                     <i className="icon icon-pencil"></i> {action.title}
-                </NavItem>
+                </MenuItem>
             );
         });
         if (this.props.context_actions.length > 1) {
             actions = (
-                <NavItem dropdown={true}>
+                <DropdownButton navItem>
                     <i className="icon icon-gear"></i>
                     <Nav navbar={true} dropdown={true}>
                         {actions}
                     </Nav>
-                </NavItem>
+                </DropdownButton>
             );
         }
         return <Nav bsStyle="navbar-nav" navbar={true} right={true} id="edit-actions">{actions}</Nav>;
@@ -170,27 +174,24 @@ var UserActions = React.createClass({
         var disabled = !this.props.loadingComplete;
         if (!(session && session['auth.userid'])) {
             return (
-                <Nav bsStyle="navbar-nav" navbar={true} right={true} id="user-actions">
+                <Nav navbar={true} pullRight={true} id="user-actions">
                     <NavItem data-trigger="login" disabled={disabled}>Sign in</NavItem>
                 </Nav>
             );
         }
         var actions = this.props.user_actions.map(function (action) {
             return (
-                <NavItem href={action.url || ''} key={action.id} data-bypass={action.bypass} data-trigger={action.trigger}>
+                <MenuItem href={action.url || ''} key={action.id} data-bypass={action.bypass} data-trigger={action.trigger}>
                     {action.title}
-                </NavItem>
+                </MenuItem>
             );
         });
         var fullname = (session.user_properties && session.user_properties.title) || 'unknown';
         return (
-            <Nav bsStyle="navbar-nav" navbar={true} right={true} id="user-actions">
-                <NavItem dropdown={true}>
-                    {fullname}
-                    <Nav navbar={true} dropdown={true}>
-                        {actions}
-                    </Nav>
-                </NavItem>
+            <Nav navbar={true} pullRight={true} id="user-actions">
+                <DropdownButton title={fullname}>
+                    {actions}
+                </DropdownButton>
             </Nav>
         );
     }
