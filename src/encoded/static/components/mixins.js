@@ -84,6 +84,19 @@ module.exports.Persona = {
         };
     },
 
+    // Functions to login or logout using Persona; for child components to call
+    childContextTypes: {
+        triggerLogin: React.PropTypes.func, // Login through Persona
+        triggerLogout: React.PropTypes.func // Logout through Persona
+    },
+
+    getChildContext: function() {
+        return {
+            triggerLogin: this.triggerLogin,
+            triggerLogout: this.triggerLogout
+        };
+    },
+
     componentDidMount: function () {
         var $ = require('jquery');
         // Login / logout actions must be deferred until persona is ready.

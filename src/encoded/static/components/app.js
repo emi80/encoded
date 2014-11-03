@@ -43,7 +43,7 @@ var portal = {
 
 
 var user_actions = [
-    {id: 'signout', title: 'Sign out', trigger: 'logout'}
+    {id: 'signout', title: 'Sign out', trigger: 'triggerLogout'}
 ];
 
 // See https://github.com/facebook/react/issues/2323

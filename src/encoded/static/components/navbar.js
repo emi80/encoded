@@ -66,6 +66,7 @@ var NavBarLayout = React.createClass({
                         <div key={1}>
                             <GlobalSections collapsable={this.props.collapsable} expanded={this.props.expanded} global_sections={portal.global_sections} section={section} navigate={this.props.navigate} />
                             {this.transferPropsTo(<UserActions />)}
+                            {context_actions ? this.transferPropsTo(<ContextActions />) : null}
                             {this.transferPropsTo(<Search />)}
                         </div>
                     </Navbar>
@@ -148,7 +149,7 @@ var ContextActions = React.createClass({
                 </DropdownButton>
             );
         }
-        return <Nav bsStyle="navbar-nav" navbar={true} right={true} id="edit-actions">{actions}</Nav>;
+        return <Nav navbar pullRight id="edit-actions">{actions}</Nav>;
     }
 });
 
@@ -169,23 +170,29 @@ var Search = React.createClass({
 
 
 var UserActions = React.createClass({
+    // Functions to login or logout using Persona
+    contextTypes: {
+        triggerLogin: React.PropTypes.func, // Login through Persona
+        triggerLogout: React.PropTypes.func // Logout through Persona
+    },
+
     render: function() {
         var session = this.props.session;
         var disabled = !this.props.loadingComplete;
         if (!(session && session['auth.userid'])) {
             return (
                 <Nav navbar={true} pullRight={true} id="user-actions">
-                    <NavItem data-trigger="login" disabled={disabled}>Sign in</NavItem>
+                    <NavItem onClick={this.context.triggerLogin} disabled={disabled}>Sign in</NavItem>
                 </Nav>
             );
         }
         var actions = this.props.user_actions.map(function (action) {
             return (
-                <MenuItem href={action.url || ''} key={action.id} data-bypass={action.bypass} data-trigger={action.trigger}>
+                <MenuItem href={action.url || ''} key={action.id} data-bypass={action.bypass} onClick={this.context[action.trigger]}>
                     {action.title}
                 </MenuItem>
             );
-        });
+        }.bind(this));
         var fullname = (session.user_properties && session.user_properties.title) || 'unknown';
         return (
             <Nav navbar={true} pullRight={true} id="user-actions">
