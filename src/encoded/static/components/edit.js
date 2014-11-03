@@ -3,8 +3,10 @@
 var React = require('react');
 var globals = require('./globals');
 var parseError = require('./mixins').parseError;
-var FetchedData = require('./fetched').FetchedData;
+var fetched = require('./fetched');
 var _ = require('underscore');
+var $script = require('scriptjs');
+var ga = require('google-analytics');
 
 
 var sorted_json = module.exports.sorted_json = function (obj) {
@@ -37,9 +39,10 @@ var ItemEdit = module.exports.ItemEdit = React.createClass({
                         <h2>Edit {title}</h2>
                     </div>
                 </header>
-                {this.transferPropsTo(
-                    <FetchedData Component={EditForm} url={url} />
-                )}
+                <fetched.FetchedData loadingComplete={this.props.loadingComplete}>
+                    <fetched.Param name="data" url={url} etagName="etag" />
+                    {this.transferPropsTo(<EditForm />)}
+                </fetched.FetchedData>
             </div>
         );
     }
@@ -69,8 +72,6 @@ var EditForm = module.exports.EditForm = React.createClass({
             </div>
         );
     },
-
-
 
     componentDidMount: function () {
         $script('brace', this.setupEditor);
@@ -138,7 +139,6 @@ var EditForm = module.exports.EditForm = React.createClass({
 
     fail: function (xhr, status, error) {
         if (status == 'abort') return;
-        var ga = window.ga;
         var data = parseError(xhr, status);
         ga('send', 'exception', {
             'exDescription': 'putRequest:' + status + ':' + xhr.statusText,
@@ -158,5 +158,4 @@ var EditForm = module.exports.EditForm = React.createClass({
 });
 
 
-globals.content_views.register(ItemEdit, 'item', 'edit');
 globals.content_views.register(ItemEdit, 'item', 'edit-json');
