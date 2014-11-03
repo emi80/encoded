@@ -106,15 +106,15 @@
             "type": "array"
         },
         "category_slims": {
-            "title": "Category",
+            "title": "Option 1",
             "type": "array"
         },
         "type_slims": {
-            "title": "Type",
+            "title": "Option 2",
             "type": "array"
         },
         "objective_slims": {
-            "title": "Objective",
+            "title": "Option 3",
             "type": "array"
         },
         "replicates.library.biosample.life_stage": {
@@ -238,15 +238,15 @@
             "type": "string"
         },
         "category_slims": {
-            "title": "Category slims",
+            "title": "Option 1 slims",
             "type": "string"
         },
         "objective_slims": {
-            "title": "Objective slims",
+            "title": "Option 2 slims",
             "type": "string"
         },
         "type_slims": {
-            "title": "Type slims",
+            "title": "Option 3 slims",
             "type": "string"
         }, 
         "assay_synonyms": {
