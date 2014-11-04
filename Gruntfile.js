@@ -65,6 +65,7 @@ module.exports = function(grunt) {
                     './src/encoded/static/libs/compat.js', // The shims should execute first
                     './src/encoded/static/libs/sticky_header.js',
                     './src/encoded/static/libs/respond.js',
+                    './src/encoded/static/libs/bootstrap.js', // simply requires all bootstrap plugins
                     './src/encoded/static/browser.js',
                 ],
                 options: {
@@ -84,6 +85,20 @@ module.exports = function(grunt) {
                     'underscore',
                     'url',
                 ],
+                shim: {
+                    'affix': {path: require.resolve('bootstrap/js/affix'), exports: null, depends: {jquery: 'jQuery'}},
+                    'alert': {path: require.resolve('bootstrap/js/alert'), exports: null, depends: {jquery: 'jQuery'}},
+                    'button': {path: require.resolve('bootstrap/js/button'), exports: null, depends: {jquery: 'jQuery'}},
+                    'carousel': {path: require.resolve('bootstrap/js/carousel'), exports: null, depends: {jquery: 'jQuery'}},
+                    'collapse': {path: require.resolve('bootstrap/js/collapse'), exports: null, depends: {jquery: 'jQuery'}},
+                    'dropdown': {path: require.resolve('bootstrap/js/dropdown'), exports: null, depends: {jquery: 'jQuery'}},
+                    'modal': {path: require.resolve('bootstrap/js/modal'), exports: null, depends: {jquery: 'jQuery'}},
+                    'popover': {path: require.resolve('bootstrap/js/popover'), exports: null, depends: {jquery: 'jQuery', 'tooltip': null}},
+                    'scrollspy': {path: require.resolve('bootstrap/js/scrollspy'), exports: null, depends: {jquery: 'jQuery'}},
+                    'tab': {path: require.resolve('bootstrap/js/tab'), exports: null, depends: {jquery: 'jQuery'}},
+                    'tooltip': {path: require.resolve('bootstrap/js/tooltip'), exports: null, depends: {jquery: 'jQuery'}},
+                    'transition': {path: require.resolve('bootstrap/js/transition'), exports: null, depends: {jquery: 'jQuery'}},
+                },
                 transform: [
                     [{harmony: true, sourceMap: true}, './reactify'],
                     'brfs',
@@ -147,6 +162,7 @@ module.exports = function(grunt) {
 
     grunt.registerMultiTask('browserify', function () {
         var browserify = require('browserify');
+        var shim = require('browserify-shim');
         var path = require('path');
         var fs = require('fs');
         var data = this.data;
@@ -154,6 +170,10 @@ module.exports = function(grunt) {
         var options = data.options || {};
 
         var b = browserify(options);
+
+        if (data.shim) {
+            b = shim(b, data.shim);
+        }
 
         var i;
         var reqs = [];
