@@ -129,7 +129,7 @@
             "title": "Run type",
             "type": "string"
         },
-        "replicates.read_length": {
+        "files.read_length": {
             "title": "Read length (nt)",
             "type": "string"
         },

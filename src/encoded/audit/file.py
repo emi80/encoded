@@ -161,3 +161,41 @@ def audit_file_output_type(value, system):
                 value['accession'],
                 value['output_type'])
             raise AuditFailure('undesirable output type', detail, level='DCC_ACTION')
+
+
+@audit_checker('file', frame=['award', 'replicate'])
+def audit_file_readlength(value, system):
+    '''
+    All ENCODE 3 experiments of sequencing type should specify their read_length
+    We are using fastq file as proxy for sequencing type
+    Other rfas likely should have warning
+    '''
+
+    if value['status'] in ['deleted', 'replaced']:
+        return
+
+    if value.get('file_format') not in ['fastq', 'fasta']:
+        return
+
+    # This should never b the case, but there seems to be 33 counter examples
+    if 'replicate' not in value:
+        return
+
+    if value['award'].get('rfa') in ['ENCODE2', 'ENCODE2-Mouse']:
+        level = 'WARNING'
+    else:
+        level = 'ERROR'
+
+    if 'read_length' not in value and ('read_length' in value['replicate']):
+        detail = 'File {} has format of {} and its replicate has read_length'.format(
+            value['accession'],
+            value['file_format']
+            )
+        raise AuditFailure('read_length in platform', detail, level='DCC_ACTION')
+
+    if 'read_length' not in value:
+        detail = 'File {} has format of {} thus requires a value for read_length'.format(
+            value['accession'],
+            value['file_format']
+            )
+        raise AuditFailure('missing read_length', detail, level=level)
