@@ -37,6 +37,15 @@
         "lot_id": ["source", "product_id"]
     },
     "properties": {
+        "status": {
+            "enum" : [
+                "in progress",
+                "deleted",
+                "replaced",
+                "released"
+                "revoked"
+            ]
+        },
         "schema_version": {
             "default": "3"
         },
