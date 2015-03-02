@@ -27,6 +27,7 @@ class Pipeline(Item):
         'analysis_steps.parents.software_versions',
         'analysis_steps.parents.software_versions.software',
         'analysis_steps.parents.software_versions.software.references',
+        'analysis_steps.documents',
         'analysis_steps.software_versions',
         'analysis_steps.software_versions.software',
         'analysis_steps.software_versions.software.references',

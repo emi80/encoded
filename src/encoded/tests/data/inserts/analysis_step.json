@@ -252,6 +252,10 @@
         "software_versions": [
             "225b2920-a594-11e4-bcd8-0800200c9a66"
         ],
+        "documents": [
+            "/documents/048d1185-2502-4f0e-a043-bbc75b9dd915/",
+            "/documents/8f1a6855-0312-4027-8869-330e42a0b04a/"
+        ],
         "uuid": "d358e1a0-a5a2-11e4-bcd8-0800200c9a66"
     }
 ]

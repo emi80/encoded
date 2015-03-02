@@ -99,3 +99,19 @@ g.edgePath {
     padding: 5px;
     border-bottom: 1px solid #e8e8e8;
 }
+
+.step-info {
+    padding: 20px 0;
+    border: 1px solid #e0e0e0;
+}
+
+.selected-step {
+    @extend .step-info;
+    background-color: #e8f0e8;
+}
+
+.graph-node-info {
+    hr {
+        margin: 0 !important;
+    }
+}
